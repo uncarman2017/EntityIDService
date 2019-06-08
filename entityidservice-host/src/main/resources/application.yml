@@ -1,0 +1,90 @@
+app:
+  id: 10000009
+info:
+  app:
+    name: 实体ID服务
+    version: 1.0.0
+    description: 提供实体ID调用接口
+endpoints:
+  shutdown:
+    #启用shutdown
+    enabled: true
+    #禁用密码验证
+    sensitive: false
+
+logging:
+  level:
+      org.slf4j.Logger: FATAL #TRACE,DEBUG,INFO,WARN,ERROR,FATAL,OFF
+
+management:
+  context-path: /admin
+  port: 9618
+  #禁用安全验证
+  security:
+    enabled: false
+server:
+  port: 9617
+  session-timeout: "# session timeout in seconds"
+  tomcat:
+    background-processor-delay: 30
+    basedir: /tmp
+    max-threads: 0
+    protocol-header: x-forwarded-proto
+    remote-ip-header: x-forwarded-for
+    uri-encoding: UTF-8
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: common-entityid-service
+  http:
+    encoding:
+      force: true
+  converters:
+    preferred-json-mapper: jackson
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
+#  cloud:
+#    stream:
+#     bindings:
+#       sleuth:
+#         destination: sleuth-itdev
+  boot:
+    admin:
+      api-path: instances
+    client:
+      prefer-ip: true
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+  thymeleaf:
+      cache: false
+      content-type: text/html
+      encoding: UTF-8
+      mode: HTML5
+
+
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+  global-config:
+  #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    #自定义SQL注入器
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  mapper-locations: mapper/*Mapper.xml
+
