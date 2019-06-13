@@ -14,3 +14,11 @@
 ![](EntityIDService架构v1.1.png)
 
 
+
+### 架构方案三
+
+![](EntityIDService架构v1.2.png)
+
+### 架构方案四
+
+![](EntityIDService架构v1.3.png)
