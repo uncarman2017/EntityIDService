@@ -12,12 +12,12 @@ import java.util.List;
  * @author songjiangtao
  */
 @FeignClient("entityid-sync-service")
-@RequestMapping("/api")
-public interface SyncServiceProxy {
+@RequestMapping("/identity")
+public interface SyncServiceProxy  {
     /**
      * 获得实体编码的时间戳
      * @return 返回年月日：yyyyMMdd
      */
-    @GetMapping("/sync/date")
-    String getEntityDate();
+    @GetMapping("/currentDate")
+    String getCurrentDate();
 }

@@ -34,10 +34,12 @@ server:
     uri-encoding: UTF-8
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: dev
   application:
-    name: common-entityid-service
+    name: entityid-sync-service
   http:
     encoding:
       force: true
@@ -47,11 +49,7 @@ spring:
     default-property-inclusion: non_null
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
-#  cloud:
-#    stream:
-#     bindings:
-#       sleuth:
-#         destination: sleuth-itdev
+
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     min: 5
