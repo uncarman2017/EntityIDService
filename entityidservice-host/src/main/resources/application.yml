@@ -34,27 +34,44 @@ server:
     uri-encoding: UTF-8
 
 spring:
+  # Redis数据库索引（默认为0）
   redis:
-    timeToLive: 15
-    lettuce:
-      pool:
-        MaxTotal: 50
-        minIdle: 1
-        maxWaitMillis: 5000
-        maxIdle: 5
-        testOnBorrow: true
-        testOnReturn: true
-        testWhileIdle: true
-    redis-of-transcript:
+    counterredis:
       database: 0
-      hostName: 172.18.2.45
-      port: 6377
-      timeout: 5000
-    redis-of-counter:
-      database: 0
-      hostName: 172.18.2.45
+    # Redis服务器地址
+      host: 172.18.2.45
+    # Redis服务器连接端口
       port: 6378
-      timeout: 5000
+    # 连接池最大连接数（使用负值表示没有限制）
+      pool:
+        max-active: 200
+    # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+    # 连接池中的最大空闲连接
+        max-idle: 10
+    # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）
+      timeout: 1000
+      password:
+    transcriptredis:
+      database: 0
+      # Redis服务器地址
+      host: 172.18.2.45
+      # Redis服务器连接端口
+      port: 6377
+      # 连接池最大连接数（使用负值表示没有限制）
+      pool:
+        max-active: 200
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 10
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接超时时间（毫秒）
+      timeout: 1000
+      password:
   profiles:
     active: dev
   application:
