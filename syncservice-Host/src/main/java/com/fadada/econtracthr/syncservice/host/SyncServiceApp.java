@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * Created by songjt on 2018/01/01.
  */
 @EnableTransactionManagement
-@EnableFeignClients("com.fadada.econtracthr.syncservice.api")
+//@EnableFeignClients("com.fadada.econtracthr.syncservice.api")
 @SpringBootApplication(excludeName = "*Service",
         scanBasePackages = {"com.fadada.econtracthr.syncservice"})
 @MapperScan("com.fadada.econtracthr.syncservice.host.dao")
