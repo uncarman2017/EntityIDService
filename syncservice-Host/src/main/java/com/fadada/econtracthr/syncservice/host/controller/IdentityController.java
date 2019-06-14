@@ -32,8 +32,9 @@ public class IdentityController implements SyncServiceProxy {
      */
     @GetMapping("/currentDate")
     public String getCurrentDate() {
+        identityService.selectList();
+        return identityService.getCurrenDate();
 
-        return "20190614";
     };
 //
 //    @RequestMapping("/offset")

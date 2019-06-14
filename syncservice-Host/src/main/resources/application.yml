@@ -18,12 +18,12 @@ logging:
 
 management:
   context-path: /admin
-  port: 9618
+  port: 8806
   #禁用安全验证
   security:
     enabled: false
 server:
-  port: 9617
+  port: 8805
   session-timeout: "# session timeout in seconds"
   tomcat:
     background-processor-delay: 30
@@ -65,7 +65,27 @@ spring:
     remove_abandoned: true
     remove_abandoned_timeout: 180
     time-between-eviction-runs-millis: 18800
-
+  redis:
+    timeToLive: 15
+    lettuce:
+      pool:
+        MaxTotal: 50
+        minIdle: 1
+        maxWaitMillis: 5000
+        maxIdle: 5
+        testOnBorrow: true
+        testOnReturn: true
+        testWhileIdle: true
+    redis-of-transcript:
+      database: 0
+      hostName: 172.18.2.45
+      port: 6377
+      timeout: 5000
+    redis-of-counter:
+      database: 0
+      hostName: 172.18.2.45
+      port: 6378
+      timeout: 5000
   boot:
     admin:
       api-path: instances

@@ -174,8 +174,8 @@
     </build>
 
     <modules>
-        <!--<module>entityidservice-host</module>-->
-        <!--<module>entityidservice-api</module>-->
+        <module>entityidservice-host</module>
+        <module>entityidservice-api</module>
         <module>syncservice-host</module>
         <module>syncservice-api</module>
     </modules>
