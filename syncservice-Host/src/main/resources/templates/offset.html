@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot and Thymeleaf example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+        td{padding:2px 5px}
+    </style>
+</head>
+<body>
+<script th:src="@{jquery-3.2.1.min.js}" type="text/javascript" />
+<script th:src="@{/public/jquery-3.2.1.min.js}" type="text/javascript" />
+<script th:src="@{/js/jquery-3.2.1.min.js}" type="text/javascript" />
+
+<h3 style="text-align: center" >实体id偏移设置</h3>
+<form th:action="@{/page/offset}"  method="get" >
+    <div style="text-align: right ;margin:5px auto;width:950px;">
+        <input type="text" name = "idCode"/>
+        <input type="submit" value = "查询"/>
+    </div>
+</form>
+<div style="text-align: center ;margin:0 auto;width:1000px;">
+    <table  border="1" cellspacing="0" >
+        <tr>
+            <th>ID代码</th>
+            <th>固定前缀</th>
+            <th>日期格式</th>
+            <th>是否有业务前缀</th>
+            <th>数字位数</th>
+            <th>内存池大小</th>
+            <th>最后同步内存生成的Id</th>
+            <th>下一批次起始值</th>
+            <th>偏移量</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="entityIdConfPO,iterStat : ${entityIdConfPOS}" th:class="${iterStat.odd}? 'odd'">
+            <td class="idCode" th:text="${entityIdConfPO.idCode}">Onions</td>
+            <td th:text="${entityIdConfPO.fixPrefix}">2.41</td>
+            <td th:text="${entityIdConfPO.datePattern}">2.41</td>
+            <td th:text="${entityIdConfPO.includeBizPrefix}?'有':'无'">2.41</td>
+            <td th:text="${entityIdConfPO.numDigit}">yes</td>
+            <td th:text="${entityIdConfPO.poolSize}">yes</td>
+            <td th:text="${entityIdConfPO.lastGeneratedId}">yes</td>
+            <td th:text="${entityIdConfPO.nextBatchStartValue}">yes</td>
+            <td><input type="text" class="offsetValue"
+                       onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "
+                ></input></td>
+            <td><input type="button" value = "执行偏移" onclick="offset(this);"></input></td>
+        </tr>
+    </table>
+
+    <a th:href="${#httpServletRequest.getScheme() + '://'
+    + #httpServletRequest.getServerName() + ':'
+     +'9617/'} "
+       id="contextPath"></a>
+
+</div>
+<script>
+    $(document).ready(function(){
+
+    });
+    function offset(){
+        var idCode = $(event.target).parents("tr").find(".idCode").text();
+        var offsetValue = $(event.target).parents("tr").find(".offsetValue").val();
+        if (!idCode || !offsetValue){
+            alert("实体id编码 或者 偏移值不能为空！");
+            return false;
+        }
+        if(window.confirm('你确定要设置实体idCode:'+idCode+'偏移'+offsetValue+'吗？')){
+            var contextPath = $('#contextPath').attr('href')+"api/entityId/"+idCode+"/offset/"+offsetValue;
+            $.ajax({url: contextPath,
+                dataType: 'json',
+                method: 'GET',
+                success: function(response) {
+                    if (response.code == "0") {
+                        alert("已成功保存！");
+                        location.reload();
+                        return true;
+                    }
+                },
+                error: function(xhr) {
+                    alert('error:' + JSON.stringify(xhr));
+                    return false;
+                }
+            })
+
+        }else{
+                //alert("取消");
+                return false;
+            }
+    }
+
+</script>
+</body>
+
+</html>
