@@ -14,4 +14,4 @@
 #    admin:
 #      url: http://172.16.9.31:9625
 druid:
-  configPath:  ./gtobasicdb_dev.properties
+  configPath:  /data/gtobasicdb_dev.properties

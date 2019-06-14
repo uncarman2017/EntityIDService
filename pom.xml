@@ -29,6 +29,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>2.1.2.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>2.1.0.RELEASE</version>
+            </dependency>
             <!-- Spring Cloud Begin-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -73,7 +83,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
-                <version>1.1.9</version>
+                <version>1.1.10</version>
             </dependency>
             <!-- common -->
             <dependency>
