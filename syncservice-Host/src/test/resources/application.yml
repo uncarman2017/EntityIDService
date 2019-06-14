@@ -1,0 +1,116 @@
+app:
+  id: 10000009
+endpoints:
+  shutdown:
+    #启用shutdown
+    enabled: true
+    #禁用密码验证
+    sensitive: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://172.16.9.21:9602/eureka"
+logging:
+#  config: "classpath:config/logback-spring.xml"
+  level:
+      root: info
+      com.ciicsh.gto: info
+      jdbc.resultset: trace
+############sjt
+#  level:
+#    root: FATAL
+#    com: FATAL
+#    com.ibatis: FATAL
+#    org.apache.ibatis: FATAL
+#    jdbc.resultset: FATAL #trace
+#
+#    com.ciicsh.gto.entityidservice.dao: FATAL
+#    com.ciicsh.gto.entityidservice.host.id: WARN
+#
+#    org.springframework.web: FATAL
+#    org.spring.springboot.dao: FATAL
+#    org.springframework: FATAL
+###############################
+#    com.ciicsh.gto: info
+#    jdbc.resultset: trace
+  #file: /tmp/logs/customermanageservice.log
+#log4j:
+#  logger:
+#    Java:
+#      sql:
+#        Connection: FATAL
+#    com:
+#      ibatis: FATAL
+#      ibatis.common.jdbc.ScriptRunner: DEBUG
+#      ibatis.common.jdbc.SimpleDataSource: DEBUG
+#      ibatis.sqlmap.engine.impl.SqlMapClientDelegate: DEBUG
+#    java:
+#      sql:
+#        PreparedStatement: DEBUG
+#        Statement: DEBUG
+management:
+  context-path: /admin
+  port: 8081
+  #禁用安全验证
+  security:
+    enabled: false
+#pagehelper:
+#  reasonable: true
+server:
+  port: 8080
+  session-timeout: "# session timeout in seconds"
+  tomcat:
+    background-processor-delay: 30
+    basedir: /tmp
+    max-threads: 0
+    protocol-header: x-forwarded-proto
+    remote-ip-header: x-forwarded-for
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: common-entityid-business
+  http:
+    encoding:
+      force: true
+  converters:
+    preferred-json-mapper: jackson
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://172.16.9.15:3306/gtobasicdb?characterEncoding=utf8&useSSL=true
+      username: root
+      password: a111111
+      initial-size: 10
+      max-active: 20
+      max-idle: 8
+      min-idle: 8
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+  global-config:
+  #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    #自定义SQL注入器
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  mapper-locations: mapper/*Mapper.xml
+#mybatis:
+#  config-location: "classpath:mybatis-config.xml"
+#  mapperLocations: "classpath:mapper/*.xml"
+#pagehelper:
+#  reasonable: true
+
+

@@ -1,0 +1,29 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://172.16.9.19:9602/eureka,http://172.16.9.20:9602/eureka,http://172.16.9.21:9602/eureka"
+    register-with-eureka: true
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 20
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+spring:
+#  zipkin:
+#    base-url: http://172.16.9.31:9623  #ZipkinService地址
+#    enabled: true
+#  sleuth:
+#    sampler:
+#      percentage: 0.1
+  boot:
+    admin:
+      url: http://172.16.9.31:9625
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers:  172.16.9.11:9092
+#          zk-nodes: 172.16.9.11:2181
+druid:
+  configPath:  /data/appdatas/gt1/gtobasicdb_dev.properties

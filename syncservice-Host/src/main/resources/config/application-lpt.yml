@@ -1,0 +1,16 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://172.16.9.68:9602/eureka"
+    register-with-eureka: true
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 20
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+spring:
+  boot:
+    admin:
+      url: http://172.16.9.68:9625
+druid:
+  configPath:  /data/appdatas/gt1/gtobasicdb_lpt.properties
