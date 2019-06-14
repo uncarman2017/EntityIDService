@@ -34,6 +34,27 @@ server:
     uri-encoding: UTF-8
 
 spring:
+  redis:
+    timeToLive: 15
+    lettuce:
+      pool:
+        MaxTotal: 50
+        minIdle: 1
+        maxWaitMillis: 5000
+        maxIdle: 5
+        testOnBorrow: true
+        testOnReturn: true
+        testWhileIdle: true
+    redis-of-transcript:
+      database: 0
+      hostName: 172.18.2.45
+      port: 6377
+      timeout: 5000
+    redis-of-counter:
+      database: 0
+      hostName: 172.18.2.45
+      port: 6378
+      timeout: 5000
   profiles:
     active: dev
   application:
