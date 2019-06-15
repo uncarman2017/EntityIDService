@@ -5,28 +5,17 @@ info:
     name: 实体ID服务
     version: 1.0.0
     description: 提供实体ID调用接口
-endpoints:
-  shutdown:
-    #启用shutdown
-    enabled: true
-    #禁用密码验证
-    sensitive: false
 
 logging:
   level:
       org.slf4j.Logger: fatal #TRACE,DEBUG,INFO,WARN,ERROR,FATAL,OFF
 
-management:
-  context-path: /admin
-  port: 8806
-  #禁用安全验证
-  security:
-    enabled: false
+
 server:
   port: 8805
   session-timeout: "# session timeout in seconds"
   tomcat:
-    background-processor-delay: 30
+    background-processor-delay: 30s
     basedir: /tmp
     max-threads: 0
     protocol-header: x-forwarded-proto
@@ -103,18 +92,15 @@ spring:
         # 连接超时时间（毫秒）
       timeout: 1000
       password:
-  boot:
-    admin:
-      api-path: instances
-    client:
-      prefer-ip: true
+
   mvc:
     view:
       prefix: /
       suffix: .jsp
   thymeleaf:
       cache: false
-      content-type: text/html
+      servlet:
+        content-type: text/html
       encoding: UTF-8
       mode: HTML5
 redisson:
