@@ -45,7 +45,6 @@ public class IdentityServiceImpl implements IdentityService {
     RedisTemplate counterStringRedisTemplate;
     @Override
     public List<EntityIdConfPO> selectList() {
-        transStringRedisTemplate.opsForValue().set("dd","aa");
         return entityIdConfMapper.selectList();
     }
 
@@ -59,15 +58,16 @@ public class IdentityServiceImpl implements IdentityService {
     public void sync2Redis() throws JsonProcessingException {
         RLock lock = RedissLockUtil.getLock("lock");
         lock.lock();
-
-        List<EntityIdConfPO> pos = entityIdConfMapper.selectList();
-        for(EntityIdConfPO po: pos){
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(po);
-            transStringRedisTemplate.opsForValue().set(po.getIdCode(),json);
+        try {
+            List<EntityIdConfPO> pos = entityIdConfMapper.selectList();
+            for (EntityIdConfPO po : pos) {
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(po);
+                transStringRedisTemplate.opsForValue().set(po.getIdCode(), json);
+            }
+        }finally {
+            lock.unlock();
         }
-
-        lock.unlock();
     }
     /* 从redis更新到db*/
     @Override
@@ -75,7 +75,7 @@ public class IdentityServiceImpl implements IdentityService {
     public void sync2db() throws IOException {
         List<EntityIdConfPO> pos = selectList();
         for (EntityIdConfPO po : pos) {
-            String json = (String)transStringRedisTemplate.opsForValue().get(po.getIdCode());// todo
+            String json = (String)transStringRedisTemplate.opsForValue().get(po.getIdCode());
             ObjectMapper mapper = new ObjectMapper();
             EntityIdConfPO udPO = mapper.readValue(json, EntityIdConfPO.class);
             entityIdConfMapper.updateById(udPO);
@@ -87,44 +87,46 @@ public class IdentityServiceImpl implements IdentityService {
     public void resetStartNum4DateChange() throws JsonProcessingException {
         RLock lock = RedissLockUtil.getLock("lock");
         lock.lock();
+        try {
+            Date newDate = new Date();
+            Long difSecond = (newDate.getTime() - currentDate.getTime());
+            if (difSecond > ((24 * 60 - 2) * 60) * 1000) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(currentDate);
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                //更新时间
+                Date tempDate = c.getTime();
+                Integer changedFlag = 1;
+                changedFlag = (tempDate.getMonth() == currentDate.getMonth()) ? changedFlag : 2;
+                changedFlag = (tempDate.getYear() == currentDate.getYear()) ? changedFlag : 3;
 
-        Date newDate = new Date();
-        Long difSecond = (newDate.getTime() - currentDate.getTime());
-        if ( difSecond > ((24*60-2)*60)*1000) {
-            Calendar c = Calendar.getInstance();
-            c.setTime(currentDate);
-            c.add(Calendar.DAY_OF_MONTH, 1);
-            //更新时间
-            Date tempDate = c.getTime();
-            Integer changedFlag = 1;
-            changedFlag = (tempDate.getMonth() == currentDate.getMonth()) ? changedFlag : 2;
-            changedFlag = (tempDate.getYear() == currentDate.getYear()) ? changedFlag : 3;
-
-            List<EntityIdConfPO> pos = selectList();
-            for (EntityIdConfPO po : pos) {
-                if (changedFlag == 1) {
-                    if (po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
-                        po.setNextBatchStartValue(1L);//这里暂时不用步长
-                        entityIdConfMapper.updateById(po);
-                    }
-                } else if (changedFlag == 2) {
-                    if (po.getDatePattern().equalsIgnoreCase("yyMM")
-                            || po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
-                        po.setNextBatchStartValue(1L);//这里暂时不用步长
-                        entityIdConfMapper.updateById(po);
-                    }
-                } else if (changedFlag == 3) {
-                    if (po.getDatePattern().equalsIgnoreCase("yy")
-                            || po.getDatePattern().equalsIgnoreCase("yyMM")
-                            || po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
-                        po.setNextBatchStartValue(1L);//这里暂时不用步长
-                        entityIdConfMapper.updateById(po);
+                List<EntityIdConfPO> pos = selectList();
+                for (EntityIdConfPO po : pos) {
+                    if (changedFlag == 1) {
+                        if (po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
+                            po.setNextBatchStartValue(1L);//这里暂时不用步长
+                            entityIdConfMapper.updateById(po);
+                        }
+                    } else if (changedFlag == 2) {
+                        if (po.getDatePattern().equalsIgnoreCase("yyMM")
+                                || po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
+                            po.setNextBatchStartValue(1L);//这里暂时不用步长
+                            entityIdConfMapper.updateById(po);
+                        }
+                    } else if (changedFlag == 3) {
+                        if (po.getDatePattern().equalsIgnoreCase("yy")
+                                || po.getDatePattern().equalsIgnoreCase("yyMM")
+                                || po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
+                            po.setNextBatchStartValue(1L);//这里暂时不用步长
+                            entityIdConfMapper.updateById(po);
+                        }
                     }
                 }
+                currentDate = tempDate;
+                sync2Redis();
             }
-            currentDate = tempDate;
-            sync2Redis();
+        }finally{
+            lock.unlock();
         }
-        lock.unlock();
     }
 }
