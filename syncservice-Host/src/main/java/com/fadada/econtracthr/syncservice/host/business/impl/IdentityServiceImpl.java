@@ -22,25 +22,25 @@ import java.util.List;
 
 @Service
 public class IdentityServiceImpl implements IdentityService {
-    //String currentDate = "20190614";
-    Date currentDate = null;
-
+    private Date currentDate = null;
     {
-        currentDate = new Date();
+        Date tempDate = new Date();
+        System.out.println(tempDate.toString());
+        Calendar c2 = Calendar.getInstance();
+        c2.set( tempDate.getYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0, 0);
+        currentDate =c2.getTime();
+        System.out.println(currentDate.toString());
     }
     @Autowired
     RedissLockUtil redissLockUtil;
     @Autowired
     EntityIdConfMapper entityIdConfMapper;
-
     @Autowired
     @Qualifier("transcriptRedisTemplate")
     RedisTemplate transStringRedisTemplate;
-
     @Autowired
     @Qualifier("counterRedisTemplate")
     RedisTemplate counterStringRedisTemplate;
-
     @Override
     public List<EntityIdConfPO> selectList() {
         transStringRedisTemplate.opsForValue().set("dd","aa");
@@ -123,10 +123,6 @@ public class IdentityServiceImpl implements IdentityService {
         }
 
         lock.unlock();
-//        //String hourTime,dayTime,monthTime,yearTime;
-//        Calendar c2 = Calendar.getInstance();
-//        c2.set( year, month, day, 0, 0, 0);
-//        Date newDate =c2.getTime();
     }
     /* 从redis更新到db*/
     @Override
