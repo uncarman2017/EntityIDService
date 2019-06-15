@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -32,8 +33,9 @@ public class IdentityController implements SyncServiceProxy {
      * @return 返回年月日：yyyyMMdd
      */
     @GetMapping("/test")
-    public void test() throws JsonProcessingException {
-        identityService.loadOnStart();
+    public void test() throws IOException {
+        identityService.sync2db();
+        //identityService.sync2Redis();
     }
     /**
      * 获得实体编码的时间戳

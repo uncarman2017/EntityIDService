@@ -23,12 +23,14 @@ import java.util.List;
 @Service
 public class IdentityServiceImpl implements IdentityService {
     private Date currentDate = null;
-    {
-        Date tempDate = new Date();
+    {   Date tempDate = new Date();
         System.out.println(tempDate.toString());
-        Calendar c2 = Calendar.getInstance();
-        c2.set( tempDate.getYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0, 0);
-        currentDate =c2.getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(tempDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        currentDate = calendar.getTime();
         System.out.println(currentDate.toString());
     }
     @Autowired
@@ -54,7 +56,7 @@ public class IdentityServiceImpl implements IdentityService {
     }
 
     @Override
-    public void loadOnStart() throws JsonProcessingException {
+    public void sync2Redis() throws JsonProcessingException {
         RLock lock = RedissLockUtil.getLock("lock");
         lock.lock();
 
@@ -67,16 +69,28 @@ public class IdentityServiceImpl implements IdentityService {
 
         lock.unlock();
     }
+    /* 从redis更新到db*/
+    @Override
+    @Scheduled(cron = "0 */5 * * * ?")
+    public void sync2db() throws IOException {
+        List<EntityIdConfPO> pos = selectList();
+        for (EntityIdConfPO po : pos) {
+            String json = (String)transStringRedisTemplate.opsForValue().get(po.getIdCode());// todo
+            ObjectMapper mapper = new ObjectMapper();
+            EntityIdConfPO udPO = mapper.readValue(json, EntityIdConfPO.class);
+            entityIdConfMapper.updateById(udPO);
+        }
+    }
     /* db定时更新到redis*/
     @Override
-    @Scheduled(cron = "0 58 23 ? * *")//   每天上午23:58触发
-    public void sync4DateChange() throws JsonProcessingException {
+    @Scheduled(cron = "0 56 23 ? * *")//   每天上午23:58触发
+    public void resetStartNum4DateChange() throws JsonProcessingException {
         RLock lock = RedissLockUtil.getLock("lock");
         lock.lock();
 
         Date newDate = new Date();
         Long difSecond = (newDate.getTime() - currentDate.getTime());
-        if (difSecond > (24*60*(60-1)*100)) {
+        if ( difSecond > ((24*60-2)*60)*1000) {
             Calendar c = Calendar.getInstance();
             c.setTime(currentDate);
             c.add(Calendar.DAY_OF_MONTH, 1);
@@ -119,22 +133,8 @@ public class IdentityServiceImpl implements IdentityService {
                 }
             }
             currentDate = tempDate;
-            loadOnStart();
+            sync2Redis();
         }
-
         lock.unlock();
     }
-    /* 从redis更新到db*/
-    @Override
-    @Scheduled(cron = "0 */5 * * * ?")
-    public void sync2db() throws IOException {
-        List<EntityIdConfPO> pos = selectList();
-        for (EntityIdConfPO po : pos) {
-            String json = (String)transStringRedisTemplate.opsForValue().get(po.getIdCode());// todo
-            ObjectMapper mapper = new ObjectMapper();
-            EntityIdConfPO udPO = mapper.readValue(json, EntityIdConfPO.class);
-            entityIdConfMapper.updateById(udPO);
-        }
-    }
-
 }

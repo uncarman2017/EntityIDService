@@ -11,9 +11,9 @@ public interface IdentityService {
 
     String getCurrenDate();
 
-    void loadOnStart() throws JsonProcessingException;
+    void sync2Redis() throws JsonProcessingException;
 
-    void sync4DateChange() throws JsonProcessingException;
+    void resetStartNum4DateChange() throws JsonProcessingException;
 
     void sync2db() throws IOException;
 }
