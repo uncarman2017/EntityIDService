@@ -4,21 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.fadada.econtracthr.commonservice</groupId>
-        <artifactId>commonservice-parent</artifactId>
+        <groupId>com.fadada.commonservice</groupId>
+        <artifactId>registerservice-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.fadada.econtracthr.commonservice</groupId>
+    <groupId>com.fadada.commonservice</groupId>
     <artifactId>entityidservice-host</artifactId>
     <version>1.0.0-RELEASE</version>
     <name>entityidservice-host</name>
 
     <dependencies>
+        <!--redis-->
         <dependency>
-            <groupId>com.fadada.econtracthr.commonservice</groupId>
+            <groupId>com.fadada.commonservice</groupId>
             <artifactId>syncservice-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.redisson</groupId>
@@ -33,24 +34,11 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--Spring Cloud-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-openfeign</artifactId>-->
-        <!--</dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-<!--        </dependency>-->
-        <!---->
 
         <!--Spring Boot-->
         <dependency>

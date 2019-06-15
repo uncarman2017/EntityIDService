@@ -1,7 +1,6 @@
 package com.fadada.econtracthr.syncservice.host.controller;
 
-import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
-import com.fadada.econtracthr.syncservice.api.SyncServiceProxy;
+
 import com.fadada.econtracthr.syncservice.host.business.IdentityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
@@ -22,7 +21,7 @@ import java.util.List;
 @Api
 @RestController
 @RequestMapping("/identity")
-public class IdentityController implements SyncServiceProxy {
+public class IdentityController {
     @Autowired
     private IdentityService identityService;
 
