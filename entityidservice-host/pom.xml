@@ -17,10 +17,20 @@
     <dependencies>
         <!--redis-->
         <dependency>
+
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.fadada.commonservice</groupId>
             <artifactId>syncservice-api</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
