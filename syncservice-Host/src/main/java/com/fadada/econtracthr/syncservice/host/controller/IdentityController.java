@@ -32,7 +32,7 @@ public class IdentityController {
      */
     @GetMapping("/test")
     public void test() throws JsonProcessingException {
-        identityService.loadOnStart();
+        identityService.sync2Redis();
     }
     /**
      * 获得实体编码的时间戳
