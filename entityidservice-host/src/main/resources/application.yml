@@ -32,7 +32,9 @@ server:
     protocol-header: x-forwarded-proto
     remote-ip-header: x-forwarded-for
     uri-encoding: UTF-8
-
+redisson:
+  address: redis://172.18.2.45:6377
+  password:
 spring:
   # Redis数据库索引（默认为0）
   redis:

@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Api
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/old/api")
 public class EntityIdController {
 
 
