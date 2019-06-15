@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-APP_NAME=registerservice-host-1.1.0.RELEASE.jar
-LOG_FILE=/app/commonservice/log/registerservice-host-1.1.0.RELEASE.log
+APP_NAME=entityidservice-host-1.0.0.jar
+LOG_FILE=/app/commonservice/log/entityidservice-host-1.0.0.log
 FILE_PATH=/app/commonservice/
 
 
@@ -29,7 +29,7 @@ start(){
     echo "${APP_NAME} is already running. pid=${pid} ."
   else
     source /etc/profile
-    nohup java -Xmx384m -Xms384m -Xmn144m -jar -Dspring.profiles.active=test $FILE_PATH$APP_NAME > $LOG_FILE 2>&1 &
+    nohup java -Xmx1024m -Xms1024m -Xmn384m -jar -Dspring.profiles.active=dev $FILE_PATH$APP_NAME > $LOG_FILE 2>&1 &
   fi
 }
 
