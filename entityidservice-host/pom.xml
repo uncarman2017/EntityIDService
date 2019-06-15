@@ -16,6 +16,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.fadada.econtracthr.commonservice</groupId>
             <artifactId>syncservice-api</artifactId>
             <version>1.0.0-SNAPSHOT</version>
