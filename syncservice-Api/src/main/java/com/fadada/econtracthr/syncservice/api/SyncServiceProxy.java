@@ -1,5 +1,6 @@
 package com.fadada.econtracthr.syncservice.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,5 +20,5 @@ public interface SyncServiceProxy  {
      * @return 返回年月日：yyyyMMdd
      */
     @GetMapping("/currentDate")
-    String getCurrentDate();
+    String getCurrentDate() throws JsonProcessingException;
 }

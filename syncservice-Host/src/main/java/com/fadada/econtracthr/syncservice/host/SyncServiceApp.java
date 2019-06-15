@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         scanBasePackages = {"com.fadada.econtracthr.syncservice"})
 @MapperScan("com.fadada.econtracthr.syncservice.host.dao")
 @EnableDiscoveryClient
+@EnableScheduling
 public class SyncServiceApp extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
