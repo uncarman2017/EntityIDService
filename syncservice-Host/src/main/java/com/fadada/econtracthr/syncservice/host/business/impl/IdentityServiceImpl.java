@@ -82,26 +82,14 @@ public class IdentityServiceImpl implements IdentityService {
             c.add(Calendar.DAY_OF_MONTH, 1);
             //更新时间
             Date tempDate = c.getTime();
-
-            Integer currentYear = currentDate.getYear();
-            Integer currentMonth = currentDate.getMonth();
-            Integer currentDay = currentDate.getDay();
-
-            Integer tempYear = tempDate.getYear();
-            Integer tempMonth = tempDate.getMonth();
-            Integer tempDay = tempDate.getDay();
-
-            Integer changedFlag = 0;
-            changedFlag = (tempYear == currentYear) ? 0 : 1;
-            changedFlag = (tempMonth == currentMonth) ? changedFlag : 2;
-            changedFlag = (tempDay == currentDay) ? changedFlag : 3;
+            Integer changedFlag = 1;
+            changedFlag = (tempDate.getMonth() == currentDate.getMonth()) ? changedFlag : 2;
+            changedFlag = (tempDate.getYear() == currentDate.getYear()) ? changedFlag : 3;
 
             List<EntityIdConfPO> pos = selectList();
             for (EntityIdConfPO po : pos) {
                 if (changedFlag == 1) {
-                    if (po.getDatePattern().equalsIgnoreCase("yy")
-                            || po.getDatePattern().equalsIgnoreCase("yyMM")
-                            || po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
+                    if (po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
                         po.setNextBatchStartValue(1L);//这里暂时不用步长
                         entityIdConfMapper.updateById(po);
                     }
@@ -112,7 +100,9 @@ public class IdentityServiceImpl implements IdentityService {
                         entityIdConfMapper.updateById(po);
                     }
                 } else if (changedFlag == 3) {
-                    if (po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
+                    if (po.getDatePattern().equalsIgnoreCase("yy")
+                            || po.getDatePattern().equalsIgnoreCase("yyMM")
+                            || po.getDatePattern().equalsIgnoreCase("yyMMdd")) {
                         po.setNextBatchStartValue(1L);//这里暂时不用步长
                         entityIdConfMapper.updateById(po);
                     }
