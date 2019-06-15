@@ -117,7 +117,9 @@ spring:
       content-type: text/html
       encoding: UTF-8
       mode: HTML5
-
+redisson:
+  address: redis://172.18.2.45:6377
+  password:
 
 mybatis-plus:
   configuration:

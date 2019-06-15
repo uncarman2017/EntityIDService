@@ -1,13 +1,12 @@
 package com.fadada.econtracthr.syncservice.host;
 
-import com.fadada.econtracthr.syncservice.host.util.SpringContextUtil;
+import com.fadada.econtracthr.syncservice.host.listener.ApplicationStartup;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -25,8 +24,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SyncServiceApp extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        ApplicationContext app = SpringApplication.run(SyncServiceApp.class, args);
-        SpringContextUtil.setApplicationContext(app);
+        SpringApplication springApplication = new SpringApplication(SyncServiceApp.class);
+        springApplication.addListeners(new ApplicationStartup());
+        springApplication.run(args);
+//        ApplicationContext app = SpringApplication.run(SyncServiceApp.class, args);
+//        SpringContextUtil.setApplicationContext(app);
     }
 
     @Override
