@@ -47,13 +47,4 @@ public class IdentityController {
         return identityService.getCurrenDate();
     }
 
-    @RequestMapping("/offset")
-    public String index(String idCode,Model model) {
-        Wrapper<EntityIdConfPO> tWrapper = new EntityWrapper<>();
-        idCode = ((idCode == null)?"":idCode.trim());
-        tWrapper.where("id_code like '%" + idCode + "%' and is_valid = 1");
-        List<EntityIdConfPO> entityIdConfPOS = identityService.selectList();//(tWrapper);
-        model.addAttribute("entityIdConfPOS",entityIdConfPOS);
-        return "offset";
-    }
 }

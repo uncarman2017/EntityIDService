@@ -1,22 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Boot and Thymeleaf example</title>
+    <title>entityId配置界面</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
         td{padding:2px 5px}
+
+         #login_click{ margin-top:21px; height:40px;}
+        #login_click a
+        {
+
+
+            text-decoration:none;
+            background: #65bef2;
+            color:#f2f2f2;
+
+            padding: 10px 30px 10px 30px;
+            font-size:16px;
+            font-family: 微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;
+            font-weight:bold;
+            border-radius:3px;
+
+            -webkit-transition:all linear 0.30s;
+            -moz-transition:all linear 0.30s;
+            transition:all linear 0.30s;
+
+        }
     </style>
+
+
 </head>
 <body>
-<script th:src="@{jquery-3.2.1.min.js}" type="text/javascript" />
-<script th:src="@{/public/jquery-3.2.1.min.js}" type="text/javascript" />
-<script th:src="@{/js/jquery-3.2.1.min.js}" type="text/javascript" />
-
+<script
+        src="http://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<!--<script th:src="@{jquery-3.2.1.min.js}" type="text/javascript" />-->
+<!--<script th:src="@{/page/jquery-3.2.1.min.js}" type="text/javascript" />-->
+<!--<script th:src="@{/js/jquery-3.2.1.min.js}" type="text/javascript" />-->
 <h3 style="text-align: center" >实体id偏移设置</h3>
 <form th:action="@{/page/offset}"  method="get" >
     <div style="text-align: right ;margin:5px auto;width:950px;">
-        <input type="text" name = "idCode"/>
-        <input type="submit" value = "查询"/>
+        <!--<input type="submit" value = "查询"/>-->
+        <div style="display: inline-block">
+            <input style="height:34px" type="text" name = "idCode"/>
+        </div>
+        <div  style="display: inline-block" id="login_click">
+            <a id="btlogin" href="#">查 询</a>
+        </div>
     </div>
 </form>
 <div style="text-align: center ;margin:0 auto;width:1000px;">
@@ -42,10 +73,15 @@
             <td th:text="${entityIdConfPO.poolSize}">yes</td>
             <td th:text="${entityIdConfPO.lastGeneratedId}">yes</td>
             <td th:text="${entityIdConfPO.nextBatchStartValue}">yes</td>
-            <td><input type="text" class="offsetValue"
+            <td><input style="height:36px;" type="text" class="offsetValue"
                        onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') "
                 ></input></td>
-            <td><input type="button" value = "执行偏移" onclick="offset(this);"></input></td>
+            <td>
+                <!--<input type="button" value = "执行偏移" onclick="offset(this);"></input>-->
+                <div style="width:140px;" id="login_click">
+                    <a id="btlogin" href="#">执行偏移</a>
+                </div>
+            </td>
         </tr>
     </table>
 

@@ -38,7 +38,6 @@ spring:
     default-property-inclusion: non_null
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: true
-
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     min: 5
@@ -92,7 +91,6 @@ spring:
         # 连接超时时间（毫秒）
       timeout: 1000
       password:
-
   mvc:
     view:
       prefix: /
