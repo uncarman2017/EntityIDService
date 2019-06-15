@@ -12,6 +12,8 @@ public interface IdentityService {
 
     String getCurrenDate();
 
+    void sysStart() throws JsonProcessingException;
+
     void sync2Redis() throws JsonProcessingException;
 
     /* 从redis更新到db*/

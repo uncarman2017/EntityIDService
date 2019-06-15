@@ -9,7 +9,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         IdentityService service = contextRefreshedEvent.getApplicationContext().getBean(IdentityService.class);
         try {
-            service.sync2Redis();;
+            service.sysStart();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

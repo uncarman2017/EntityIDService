@@ -53,20 +53,13 @@ public class IdentityServiceImpl implements IdentityService {
         Format f = new SimpleDateFormat("yyyyMMdd");
         return f.format(currentDate);
     }
-
     @Override
     public void sync2Redis() throws JsonProcessingException {
-        RLock lock = RedissLockUtil.getLock("lock");
-        lock.lock();
-        try {
-            List<EntityIdConfPO> pos = entityIdConfMapper.selectList();
-            for (EntityIdConfPO po : pos) {
-                ObjectMapper mapper = new ObjectMapper();
-                String json = mapper.writeValueAsString(po);
-                transStringRedisTemplate.opsForValue().set(po.getIdCode(), json);
-            }
-        }finally {
-            lock.unlock();
+        List<EntityIdConfPO> pos = entityIdConfMapper.selectList();
+        for (EntityIdConfPO po : pos) {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(po);
+            transStringRedisTemplate.opsForValue().set(po.getIdCode(), json);
         }
     }
     /* 从redis更新到db*/
@@ -79,6 +72,17 @@ public class IdentityServiceImpl implements IdentityService {
             ObjectMapper mapper = new ObjectMapper();
             EntityIdConfPO udPO = mapper.readValue(json, EntityIdConfPO.class);
             entityIdConfMapper.updateById(udPO);
+        }
+    }
+    /*只在系统启动时调用*/
+    @Override
+    public void sysStart() throws JsonProcessingException {
+        RLock lock = RedissLockUtil.getLock("lock");
+        lock.lock();
+        try {
+            sync2Redis();
+        }finally {
+            lock.unlock();
         }
     }
     /* db定时更新到redis*/
