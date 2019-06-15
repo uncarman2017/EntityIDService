@@ -27,8 +27,6 @@ public class IdConsumerController {
     public static final String PAD_STR = "0";
     public static final String DEFAULT_CURRENT_DATE_FORMATION = "yyyyMMdd";
     public static final String DEFAULT_FAILURE_STATUS = "-1";
-    public static final long DEFAULT_COUNTER_LIMIT = 99999L;
-    public static final String FAILURE_MSG = "获取EntityId失败！";
 
     @Autowired
     @Resource(name = "counterRedisTemplate")
@@ -36,17 +34,15 @@ public class IdConsumerController {
     @Autowired
     @Resource(name = "transcriptRedisTemplate")
     private RedisTemplate transcriptRedis;
-    @Autowired
+
     private SyncServiceProxy syncServiceProxy;
 
     @GetMapping("/get/{idCode}")
     public String getNextEntityId(@PathVariable("idCode") String idCode) throws IOException {
         Long increment = counterRedis.opsForValue().increment(idCode);
-        if (null == increment || increment >= DEFAULT_COUNTER_LIMIT) {
-            return FAILURE_MSG;
-        }
         EntityIdConfPO entityIdConfPO = syncTranscriptRedis(idCode, increment);
-        String currentDate = syncServiceProxy.getCurrentDate();
+//        String currentDate = syncServiceProxy.getCurrentDate();
+        String currentDate = "20190614";
         return assembleEntityId(idCode, increment, entityIdConfPO, currentDate);
     }
 

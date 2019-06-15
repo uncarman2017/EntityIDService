@@ -1,12 +1,17 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: "http://172.18.2.45:8900/eureka"
-    register-with-eureka: true
-  instance:
-    lease-expiration-duration-in-seconds: 30
-    lease-renewal-interval-in-seconds: 20
-    prefer-ip-address: true
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: "http://172.16.9.19:9602/eureka,http://172.16.9.20:9602/eureka,http://172.16.9.21:9602/eureka"
+#    register-with-eureka: true
+#  instance:
+#    lease-expiration-duration-in-seconds: 30
+#    lease-renewal-interval-in-seconds: 20
+#    prefer-ip-address: true
 #    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+#spring:
+#  boot:
+#    admin:
+#      url: http://172.16.9.31:9625
 druid:
   configPath:  /data/gtobasicdb_dev.properties

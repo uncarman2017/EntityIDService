@@ -1,7 +1,6 @@
 package com.fadada.econtracthr.syncservice.host.controller;
 
-import com.alibaba.druid.sql.ast.statement.SQLColumnDefinition;
-import com.fadada.econtracthr.syncservice.api.SyncServiceProxy;
+
 import com.fadada.econtracthr.syncservice.host.business.IdentityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -23,7 +21,7 @@ import java.util.List;
 @Api
 @RestController
 @RequestMapping("/identity")
-public class IdentityController implements SyncServiceProxy {
+public class IdentityController {
     @Autowired
     private IdentityService identityService;
 
@@ -33,9 +31,8 @@ public class IdentityController implements SyncServiceProxy {
      * @return 返回年月日：yyyyMMdd
      */
     @GetMapping("/test")
-    public void test() throws IOException {
-        identityService.sync2db();
-        //identityService.sync2Redis();
+    public void test() throws JsonProcessingException {
+        identityService.loadOnStart();
     }
     /**
      * 获得实体编码的时间戳
