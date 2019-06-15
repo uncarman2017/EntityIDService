@@ -11,7 +11,7 @@
 
     <groupId>com.fadada.commonservice</groupId>
     <artifactId>entityidservice-host</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.0</version>
     <name>entityidservice-host</name>
 
     <dependencies>
