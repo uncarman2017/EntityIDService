@@ -1,9 +1,10 @@
 package com.fadada.entityidservice.host.controller;
 
-import com.fadada.syncservice.api.SyncServiceProxy;
 import com.fadada.entityidservice.host.entity.EntityIdConfPO;
 import com.fadada.entityidservice.host.util.RedissLockUtil;
+import com.fadada.syncservice.api.SyncServiceProxy;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang.StringUtils;
 import org.redisson.api.RLock;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Api
 @RestController
@@ -41,22 +43,38 @@ public class IdConsumerController {
 
     @GetMapping("/get/{idCode}")
     public String getNextEntityId(@PathVariable("idCode") String idCode) throws IOException {
+        return getSingleEntityId(idCode);
+    }
+
+    @GetMapping("/batchGet/{idCode}/{reqNum}")
+    public List<String> batchGetNextEntityId(@PathVariable("idCode") String idCode, @PathVariable("reqNum") Integer reqNum) throws IOException {
+        if (null == reqNum) {
+            return Lists.newArrayList(FAILURE_MSG);
+        }
+        List<String> entityIds = Lists.newArrayList();
+        for (Integer i = 0; i < reqNum; i++) {
+            entityIds.add(getSingleEntityId(idCode));
+        }
+        return entityIds;
+    }
+
+    private String getSingleEntityId(String idCode) throws IOException {
         Long increment = counterRedis.opsForValue().increment(idCode);
         if (null == increment || increment >= DEFAULT_COUNTER_LIMIT) {
             return FAILURE_MSG;
         }
-        EntityIdConfPO entityIdConfPO = syncTranscriptRedis(idCode, increment);
         String currentDate = syncServiceProxy.getCurrentDate();
+        EntityIdConfPO entityIdConfPO = syncTranscriptRedis(idCode, increment);
         return assembleEntityId(idCode, increment, entityIdConfPO, currentDate);
     }
 
-    private String assembleEntityId(@PathVariable("idCode") String idCode, Long increment, EntityIdConfPO entityIdConfPO, String currentDate) {
+    private String assembleEntityId(String idCode, Long increment, EntityIdConfPO entityIdConfPO, String currentDate) {
         return idCode.trim()
                 + translateCurrentDate(currentDate, entityIdConfPO).trim()
                 + StringUtils.leftPad(String.valueOf(increment), entityIdConfPO.getNumDigit(), PAD_STR);
     }
 
-    private EntityIdConfPO syncTranscriptRedis(@PathVariable("idCode") String idCode, Long increment) throws IOException {
+    private EntityIdConfPO syncTranscriptRedis(String idCode, Long increment) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         EntityIdConfPO entityIdConfPO = mapper.readValue(String.valueOf(transcriptRedis.opsForValue().get(idCode)), EntityIdConfPO.class);
         entityIdConfPO.setNextBatchStartValue(increment);
