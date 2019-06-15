@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
@@ -18,6 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         scanBasePackages = {"com.fadada.entityidservice.host"})
 @MapperScan("com.fadada.entityidservice.host.dao")
 @EnableConfigurationProperties
+@EnableDiscoveryClient
+@EnableFeignClients("com.fadada.syncservice.api")
 public class EntityIDServiceApp extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
