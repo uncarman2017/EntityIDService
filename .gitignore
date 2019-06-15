@@ -3,3 +3,5 @@
 /entityidservice-api/*.iml
 *.iml
 /syncservice-Api/*.iml
+target
+/entityidservice-api/target
