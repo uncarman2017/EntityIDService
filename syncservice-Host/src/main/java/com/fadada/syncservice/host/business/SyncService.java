@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.io.IOException;
 import java.util.List;
 
-public interface IdentityService {
+public interface SyncService {
     List<EntityIdConfPO> selectList();
 
     String getCurrenDate();

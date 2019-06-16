@@ -1,7 +1,7 @@
 package com.fadada.syncservice.host.business.impl;
 
 import com.fadada.syncservice.host.SyncServiceApp;
-import com.fadada.syncservice.host.business.IdentityService;
+import com.fadada.syncservice.host.business.SyncService;
 import com.fadada.syncservice.host.util.SpringContextUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,10 +16,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=SyncServiceApp.class)
 @WebAppConfiguration
-public class IdentityServiceImplTest extends AbstractJUnit4SpringContextTests{
-    private static Log log = LogFactory.getLog(IdentityServiceImplTest.class);
+public class SyncServiceImplTest extends AbstractJUnit4SpringContextTests{
+    private static Log log = LogFactory.getLog(SyncServiceImplTest.class);
     @Autowired
-    IdentityService identityService;
+    SyncService identityService;
     @Test
     public void myTest() {
         SpringContextUtil.setApplicationContext(applicationContext);

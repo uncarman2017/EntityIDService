@@ -2,7 +2,7 @@ package com.fadada.syncservice.host.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.fadada.syncservice.host.business.IdentityService;
+import com.fadada.syncservice.host.business.SyncService;
 import com.fadada.syncservice.host.entity.EntityIdConfPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,16 +15,16 @@ import java.util.List;
 @RequestMapping("/page")
 public class PageControler {
     @Autowired
-    private IdentityService identityService;
+    private SyncService syncService;
 
 
     @RequestMapping("/offset")
-    public String index(String idCode,Model model) {
+    public String index(String idCode, Model model) {
         Wrapper<EntityIdConfPO> tWrapper = new EntityWrapper<>();
-        idCode = ((idCode == null)?"":idCode.trim());
+        idCode = ((idCode == null) ? "" : idCode.trim());
         tWrapper.where("id_code like '%" + idCode + "%' and is_valid = 1");
-        List<EntityIdConfPO> entityIdConfPOS = identityService.selectList();//(tWrapper);
-        model.addAttribute("entityIdConfPOS",entityIdConfPOS);
+        List<EntityIdConfPO> entityIdConfPOS = syncService.selectList();//(tWrapper);
+        model.addAttribute("entityIdConfPOS", entityIdConfPOS);
         return "offset";
     }
 }

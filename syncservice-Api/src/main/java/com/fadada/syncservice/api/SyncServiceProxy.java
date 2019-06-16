@@ -13,7 +13,7 @@ import java.util.List;
  * @author songjiangtao
  */
 @FeignClient("entityid-sync-service")
-@RequestMapping("/identity")
+@RequestMapping("/entity")
 public interface SyncServiceProxy  {
     /**
      * 获得实体编码的时间戳

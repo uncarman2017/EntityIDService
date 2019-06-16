@@ -1,6 +1,6 @@
 package com.fadada.syncservice.host.business.impl;
 
-import com.fadada.syncservice.host.business.IdentityService;
+import com.fadada.syncservice.host.business.SyncService;
 import com.fadada.syncservice.host.dao.EntityIdConfMapper;
 import com.fadada.syncservice.host.entity.EntityIdConfPO;
 import com.fadada.syncservice.host.util.RedissLockUtil;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class IdentityServiceImpl implements IdentityService {
+public class SyncServiceImpl implements SyncService {
     private Date currentDate = null;
     {   Date tempDate = new Date();
         System.out.println(tempDate.toString());

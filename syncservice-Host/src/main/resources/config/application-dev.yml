@@ -2,7 +2,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: "http://172.18.2.45:8900/eureka"
-    register-with-eureka: false
+    register-with-eureka: true
   instance:
     lease-expiration-duration-in-seconds: 30
     lease-renewal-interval-in-seconds: 20
