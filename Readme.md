@@ -13,15 +13,15 @@
 实体ID在业务系统的数据库设计中是比较重要的元素，实体ID服务提供了Java8的GUID之外的另一个可选方案，具有ID格式一致性，递增性，唯一性和高性能的特点。
 
 ### 架构方案一
-![](.\EntityIDService架构v1.0.png)
+![](./EntityIDService架构v1.0.png)
 
 ### 架构方案二
-![](.\EntityIDService架构v1.1.png)
+![](./EntityIDService架构v1.1.png)
 
 ### 架构方案三
 
-![](.\EntityIDService架构v1.2.png)
+![](./EntityIDService架构v1.2.png)
 
 ### 架构方案四
 
-![](.\EntityIDService架构v1.3.png)
+![](./EntityIDService架构v1.3.png)
