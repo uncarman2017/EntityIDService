@@ -14,15 +14,9 @@
 系统采用了分布式微服务技术栈来构成服务主体，使用了分布式锁等技术来保障服务内部写入操作的安全性，集成redis cluster来提供整数计数器的安全运算。
 
 ### 架构方案一
-![](./EntityIDService架构v1.0.png)
-
-### 架构方案二
-![](./EntityIDService架构v1.1.png)
-
-### 架构方案三
 
 ![](./EntityIDService架构v1.2.png)
 
-### 架构方案四
+### 架构方案二
 
 ![](./EntityIDService架构v1.3.png)
