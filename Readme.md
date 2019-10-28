@@ -15,8 +15,8 @@
 
 ### 架构方案一
 
-![](./EntityIDService架构v1.2.png)
+![](.\EntityIDService架构v1.2.png)
 
 ### 架构方案二
 
-![](./EntityIDService架构v1.3.png)
+![](.\EntityIDService架构v1.3.png)
